@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="user">
+	<select id="checkuser" resultType="Integer">
+		SELECT COUNT(*) from user where uid = #{uid} AND pwd= #{pwd} 
+	</select>
+	<select id="actionlogin" resultType="com.spring.scheduler.user.dto.UserDTO">
+		select uid, name, email1,email2 ,phone1,phone2,phone3 ,emailauthentication
+		from user
+		where uid = #{uid} and pwd = #{pwd}
+	</select>
+	<select id="lolo" resultType="com.spring.scheduler.user.dto.UserDTO">
+		select * from user
+	</select>
+	
+	<select id="snslogin" resultType="com.spring.scheduler.user.dto.UserDTO">
+		select * from user where 
+		<if test="snsname == 'google' ">
+			googleid = #{user.googleid}
+		</if>
+		<if test="snsname == 'naver' ">
+			naverid = #{user.naverid}
+		</if>
+	</select>
+	<select id="checkid" resultType="Integer">
+		select count(*) from user where uid = #{uid}
+	</select>
+	<update id="emailauth">
+		UPDATE user SET emailauthentication = #{key}  WHERE uid= #{uid}
+	</update>
+	<insert id="actionjoin">
+			<!-- INSERT INTO user(uid,pwd,NAME,phone1,phone2,phone3,email1,email2, emailauthentication)  VALUES(#{uid},#{pwd},#{name},#{phone1},#{phone2},#{phone3},#{email1},#{email2},#{emailauthentication}) -->	
+				INSERT INTO user(uid,pwd,NAME,phone1,phone2,phone3,email1,email2,emailauthentication,naverid,googleid)  
+				VALUES(#{uid},#{pwd},#{name},#{phone1},#{phone2},#{phone3},#{email1},#{email2},#{emailauthentication},#{naverid},#{googleid})	
+	</insert>
+	
+	<select id="checkemailaauth" resultType="Integer">
+    SELECT count(*) FROM user WHERE uid =#{uid}  AND emailauthentication=#{key}
+    </select> 
+    
+    <select id="selectemailauth" resultType="String">
+    SELECT emailauthentication FROM user WHERE uid =#{uid} 
+    </select>
+    
+    <select id="emailauthduplicate" resultType="Integer">
+    SELECT count(*) FROM user WHERE email1=#{email1} AND email2=#{email2}
+    </select>
+    
+    <update id="updateemailaauth">
+    update user set emailauthentication='Y' where uid=#{key} 
+    </update>
+    
+    <update id="emailauthidupdate">
+    update user set email1 = #{email1} , email2= #{email2} where uid=#{uid} 
+    </update>
+    
+    
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

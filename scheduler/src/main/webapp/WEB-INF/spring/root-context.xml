@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	
+	
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<context:property-placeholder location="classpath:/dbconfig.properties"/>
+	
+	<!--xml의 bean을 사용하는 이유는 클래스를 만들고 객체를 만들어서 사용해야하는것을 xml태그인 bean을 사용함으로써 알아서 서버가 시작할때 스프링프레임워크에서 객체를  알아서 만들어서 메모리에 올려준다. 그렇기 때문에 개발자의 손을 많이 타지않는다.  -->
+	<!--id는 변수명 class는 자료형 property는 멤버변수, 서버가 시작되면 bean을   메모리에 올린다  , jsp에서 배울때는 mybatis설정파일에서 연결을 했지만 연결방법은 여러개가있으니 그중 root-context.xml을 통해 연결하는 방법을 택한것이다.-->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- 드라이버 클래스 이름이 변경됨 , net.sf.log4jdbc.sql.jdbcapi.DriverSpy는 sql실행상황을 자세하게 보여준다. -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<!-- 연결문자열에 log4jdbc가 추가됨 ,sql관련된것을 로깅한다. 위의 driverClassName과 연동한다.-->
+		
+		
+		<property name="url"
+				value="${dbconfig.dburl}" />
+			<property name="username" value="${dbconfig.dbusername}" />
+			<property name="password" value="${dbconfig.dbpassword}" />
+	</bean>
+	
+	<!-- 아파치 DBCP설정 , db연결을 할떄 사용해도된다.-->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close"> <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" 
+		/> <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" /> 
+		<property name="username" value="java" /> <property name="password" value="java1234" 
+		/> </bean> -->
+		
+	<!-- SqlSessionFactory 객체 주입  , classpath는 src를  뜻한다. 즉  src/main/resource패키지의 mybatis-config.xml를 뜻한다 
+	 그리고 mappers/**/에서 **는 하위디렉토리를 다포함 한다는뜻이다.-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+		
+	</bean>
+	<!-- SqlSession 객체 주입 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	<!-- mybatis mapper 코드가 포함된 클래스를 찾아서 bean으로 등록하도록 설정해야함, mybatis mapper를 찾아서 메모리에 올린다. -->
+	<!-- <mybatis-spring:scan base-package="com.example.Computer.mapper"/> -->
+	
+	<!--  트랜잭션 관련설정 , bean은 서버가 시작할때 메모리에 올라온다 -->
+	<bean id="transactionManager"
+		 class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		 <property name="dataSource" ref="dataSource">
+	 </property>
+	</bean>
+	<!-- 트랜잭션 관련 어노테이션을 자동 인식하는 옵션 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+		
+</beans>

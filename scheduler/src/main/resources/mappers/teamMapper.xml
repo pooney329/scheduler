@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="team">
+
+<!--팀등록  -->
+	<insert id="insertteam" useGeneratedKeys="true" keyProperty="tbno" parameterType="com.spring.scheduler.team.dto.TeamDTO">
+	
+		insert into team (
+						teamMaster,
+						teamIntroduce, 
+						      teamName,
+							  category,
+						   teamContent,
+						   teamHashTag,
+						  participants,
+						  allowSearch)
+	  	VALUES(
+	  		#{teamMaster},
+			#{teamIntroduce}, 
+			#{teamName},
+			#{category},
+			#{teamContent},
+			#{teamHashTag},
+			#{participants},
+			#{allowSearch}
+	  	)
+		
+	</insert>
+	
+	<!--팀등록 -->
+	
+	<insert id ="insertmember">
+		insert into team_member(tbno,uid, authority) values(#{tbno}, #{uid},#{authority}) 
+		
+	</insert>
+	
+	<!--팀 썸네일 등록 -->	
+	<insert id="insertthumbnail">
+		insert into thumbnail(tbno,uuid,path,filename,mainThumbnail,backThumbnail)  values(#{tbno},#{uuid},#{path},#{filename},#{mainThumbnail},#{backThumbnail})	
+	</insert>
+	<!--팀리스트 가져오기 -->
+    <select id="teamlist" resultType="com.spring.scheduler.team.dto.TeamDTO">
+    	SELECT team.tbno, 
+    		   team.teamName, 
+    		   team.category,
+    		   team.teamContent,
+    		   team.teamHashTag,
+    		   team.participants, 
+    		   membercount.num 
+    	FROM team , (SELECT tbno ,COUNT(*) AS num FROM team_member GROUP BY tbno) membercount
+    	 
+    	WHERE team.tbno = membercount.tbno
+    </select>
+    <select id="selectthumbnail" resultType="com.spring.scheduler.team.dto.ThumbnailDTO">
+    	select * from thumbnail where tbno = #{tbo}
+    </select>
+    
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

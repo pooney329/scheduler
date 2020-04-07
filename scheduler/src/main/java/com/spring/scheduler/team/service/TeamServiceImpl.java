@@ -1,6 +1,7 @@
 package com.spring.scheduler.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -34,9 +35,9 @@ public class TeamServiceImpl implements TeamService {
 
 	//팀리스트 가져오기
 	@Override
-	public List<TeamDTO> getList() {
+	public List<TeamDTO> getList(Map<String,Integer> map) {
 		
-		return teamDao.getList();
+		return teamDao.getList(map);
 	}
 
 

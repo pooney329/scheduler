@@ -18,8 +18,8 @@ public class TeamDTO {
 	private String allowSearch;  // 검색 노출 허용 여부
 	private String thumbnailExistence;  //썸네일 존재 여부 
 	private List<ThumbnailDTO> thumbnailList =null ; //대표썸네일 , 백그라운드 썸네일
-	private int tbno;
-	private int num;
+	private int tbno; //게시물 번호
+	private int num;  //참여 중인 팀 원수 
 	
 	
 	

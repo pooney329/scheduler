@@ -44,16 +44,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!--팀리스트 가져오기 -->
     <select id="teamlist" resultType="com.spring.scheduler.team.dto.TeamDTO">
-    	SELECT team.tbno, 
-    		   team.teamName, 
-    		   team.category,
-    		   team.teamContent,
-    		   team.teamHashTag,
-    		   team.participants, 
-    		   membercount.num 
-    	FROM team , (SELECT tbno ,COUNT(*) AS num FROM team_member GROUP BY tbno) membercount
-    	 
-    	WHERE team.tbno = membercount.tbno
+		SELECT  t.tbno,
+			    t.teamName,
+			    t.category,
+				t.teamContent,
+				t.teamHashTag,
+				t.participants,
+				membercount.num 
+		FROM (SELECT * , Row_Number() OVER (order by tbno desc ) AS rownum FROM team ORDER BY team.teamdate DESC , team.tbno DESC  ) t , 
+			 (SELECT tbno ,COUNT(*) AS num FROM team_member GROUP BY tbno) membercount
+		
+		WHERE t.tbno = membercount.tbno AND rownum BETWEEN #{start} AND #{end} ORDER BY t.teamdate desc
+	    	
+    
     </select>
     <select id="selectthumbnail" resultType="com.spring.scheduler.team.dto.ThumbnailDTO">
     	select * from thumbnail where tbno = #{tbo}

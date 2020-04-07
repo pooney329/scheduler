@@ -1,12 +1,14 @@
 package com.spring.scheduler.team.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,9 +47,13 @@ public class TeamController {
 	//팀리스트보여주기
 	@RequestMapping(value="/teamlist", method=RequestMethod.GET)
 	public void teamlist(Model model) {
-		List<TeamDTO> teamlist = teamService.getList();
-		System.out.println(teamlist);
-		model.addAttribute("list", teamlist);
+		
+		
+		 
+		/*
+		 * List<TeamDTO> teamlist = teamService.getList(); System.out.println(teamlist);
+		 * model.addAttribute("list", teamlist);
+		 */
 		
 		
 		
@@ -55,9 +61,10 @@ public class TeamController {
 	
 	@ResponseBody
 	@RequestMapping(value="/teamlist", method = RequestMethod.POST)
-	public String teamlist() {
+	public List<TeamDTO> teamlist(@RequestBody Map<String,Integer> map) {
+		 
 		
-		return "sc";
+		return teamService.getList(map);
 		
 		
 	}

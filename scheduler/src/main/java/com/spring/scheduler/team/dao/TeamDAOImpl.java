@@ -16,11 +16,13 @@ import com.spring.scheduler.team.dto.ThumbnailDTO;
 @Repository
 public class TeamDAOImpl implements TeamDAO {
 	private static final String NS = "team."; //네임스페이스
-	private static final String INSERTTEAM = "insertteam"; //팀등록
-	private static final String INSERTMEMBER = "insertmember";  //멤버등록
-	private static final String INSERTTHUMBNAIL = "insertthumbnail"; //팀 썸네일 등록
-	private static final String TEAMLIST = "teamlist"; //팀리스트 가져오기
-	private static final String SELECTTHUMBNAIL = "selectthumbnail"; //팀썸네일 가져오기
+	private static final String INSERTTEAM = NS+"insertteam"; //팀등록
+	private static final String INSERTMEMBER = NS+"insertmember";  //멤버등록
+	private static final String INSERTTHUMBNAIL = NS+ "insertthumbnail"; //팀 썸네일 등록
+	private static final String TEAMLIST = NS+"teamlist"; //팀리스트 가져오기
+	private static final String SELECTTHUMBNAIL = NS+"selectthumbnail"; //팀썸네일 가져오기
+	
+	
 	@Inject
 	SqlSession sqlSession;
 	
@@ -63,8 +65,17 @@ public class TeamDAOImpl implements TeamDAO {
 		
 	}
 	@Override
-	public List<TeamDTO> getList() {
-		List<TeamDTO> teamList = sqlSession.selectList(TEAMLIST);
+	public List<TeamDTO> getList(Map<String,Integer> map) {
+		 //레코드 16를 기준으로 가져온다 
+		 int scrollCount = map.get("scrollCount"); 
+		 int start = scrollCount * 16 + scrollCount;
+		 int end = start == 0 ? start +16 :start +16 -1;
+		 
+		 map = new HashMap<String, Integer>();
+		 map.put("start",start);
+		 map.put("end",end);		 
+		 
+		 List<TeamDTO> teamList = sqlSession.selectList(TEAMLIST, map);
 		
 		teamList.forEach(team -> {
 			
@@ -82,8 +93,7 @@ public class TeamDAOImpl implements TeamDAO {
 			
 		});
 		
-		System.out.println("aa"+ teamList.get(1).getThumbnailList().get(0).getMainThumbnail());
-		System.out.println("aa"+ teamList.get(1).getThumbnailList().get(1).getBackThumbnail());
+		
 		return teamList;
 	}
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.scheduler.team.dto.TeamDTO;
@@ -58,7 +59,17 @@ public class TeamController {
 		
 		
 	}
+
+	//팀 상세 정보 보기 
+	@RequestMapping(value="/teamdetail" , method=RequestMethod.GET)
+	public void teamdetail (@RequestParam int tbno, Model model) {
+		TeamDTO team = teamService.getTeamDetail(tbno);
+		model.addAttribute("team", team);
+		
+	}
 	
+	
+	//무한스크롤 요청 
 	@ResponseBody
 	@RequestMapping(value="/teamlist", method = RequestMethod.POST)
 	public List<TeamDTO> teamlist(@RequestBody Map<String,Integer> map) {

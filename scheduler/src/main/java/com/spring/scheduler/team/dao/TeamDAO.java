@@ -15,5 +15,7 @@ public interface TeamDAO {
 	public List<TeamDTO> getList(Map<String,Integer> map);
 	//썸네일리스트 가져오기
 	public List<ThumbnailDTO> getThumnail(int tbno);
+	// 팀 상세정보 가져오기 
+	public TeamDTO getTeamDetail(int tbno);
 
 }

@@ -21,6 +21,7 @@ public class TeamDAOImpl implements TeamDAO {
 	private static final String INSERTTHUMBNAIL = NS+ "insertthumbnail"; //팀 썸네일 등록
 	private static final String TEAMLIST = NS+"teamlist"; //팀리스트 가져오기
 	private static final String SELECTTHUMBNAIL = NS+"selectthumbnail"; //팀썸네일 가져오기
+	private static final String SELECTTEAMDETAIL = NS+"selectteamdetail"; //팀상세정보 가져오기 
 	
 	
 	@Inject
@@ -100,6 +101,33 @@ public class TeamDAOImpl implements TeamDAO {
 	public List<ThumbnailDTO> getThumnail(int tIdx) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	//팀 상세정보 가져오기 
+	@Override
+	public TeamDTO getTeamDetail(int tbno) {
+		
+		
+		//팀 디테일 정보 가져오기 
+		TeamDTO team  = sqlSession.selectOne(SELECTTEAMDETAIL, tbno);
+		
+		
+		//팀 썸네일 가져오기 
+		List<ThumbnailDTO> thumbnailList = sqlSession.selectList(SELECTTHUMBNAIL , tbno);
+		
+		
+		//썸네엘이 존재 한다면 TeamDTO객체에 썸네일리스트 추가하기 
+		if(!thumbnailList.isEmpty()) {
+			team.setThumbnailList(thumbnailList);
+			
+		}
+		
+		
+		
+		
+		
+		return team;
+				
 	}
 	
 

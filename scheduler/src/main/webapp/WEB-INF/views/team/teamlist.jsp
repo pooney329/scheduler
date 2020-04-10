@@ -182,7 +182,7 @@ var scrollCount  = 0;
 		contentType: "application/json",
 		dataType : "json",
 		success : function(teamlist) {
-
+			
 			for (var i = 0; i < teamlist.length; i++) {
 				
 
@@ -227,6 +227,14 @@ var scrollCount  = 0;
 				$button.text("탐방하기");
 
 				$button.attr("class", "btn btn-primary");
+				$button.data("tbno", teamlist[i].tbno);
+				$button.click(function(){
+					var tbno = $(this).data("tbno");
+					location.href="${path}/team/teamdetail?tbno="+ tbno
+				});
+				
+				
+				
 
 				$teamexplain.append($h3);
 				$teamexplain.append($p);
@@ -246,10 +254,7 @@ var scrollCount  = 0;
 								+ teamlist[i].thumbnailList[j].filename;
 						path = encodeURIComponent(path);
 
-						console
-								.log(teamlist[i].thumbnailList[j].backThumbnail);
-
-						console.log(teamlist[i].thumbnailList[j]);
+						
 						if (teamlist[i].thumbnailList[j].mainThumbnail == "Y") {
 
 							$back_img.attr("src",

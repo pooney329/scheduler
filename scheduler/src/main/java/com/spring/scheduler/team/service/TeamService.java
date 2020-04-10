@@ -14,7 +14,10 @@ public interface TeamService {
 	// 팀리스트 가져오기
 	public List<TeamDTO> getList(Map<String,Integer> map);
 
-	// 팀리스트 가져오기
+	// 팀썸네일 가져오기
 	public List<ThumbnailDTO> getThumnail(int tbno);
+	
+	// 팀 상세정보 가져오기 
+	public TeamDTO getTeamDetail(int tbno);
 
 }

@@ -47,4 +47,11 @@ public class TeamServiceImpl implements TeamService {
 		return null;
 	}
 
+	@Override
+	public TeamDTO getTeamDetail(int tbno) {
+		
+		return teamDao.getTeamDetail(tbno); 
+				
+	}
+
 }

@@ -58,9 +58,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    	
     
     </select>
+    
+    <!--팀 상세정보 페이지에서 썸네일 가져오기  -->
     <select id="selectthumbnail" resultType="com.spring.scheduler.team.dto.ThumbnailDTO">
     	select * from thumbnail where tbno = #{tbo}
     </select>
+    <!--팀 상세정보 페이지에서 팀상세정보 가져오기  -->
+    <select id= "selectteamdetail" resultType="com.spring.scheduler.team.dto.TeamDTO">
+    	SELECT * FROM team WHERE tbno = #{tbno}
+    </select>
+    
+     
     
     
 </mapper>

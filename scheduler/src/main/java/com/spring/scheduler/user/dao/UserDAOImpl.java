@@ -22,6 +22,7 @@ public class UserDAOImpl implements UserDAO {
 	private static final String CHECKID = NS+"checkid" ;  // 아이디중복확인
 	private static final String EMAILAUTH  = NS+"emailauth" ;  // 이메일 인증 
 	private static final String ACTIONJOIN  = NS+"actionjoin" ;  // 회원가입
+	private static final String INSERTPROFILE  = NS + "insertprofile"; //프로필 사진 등록
 	private static final String UPDATEEMAILAAUTH  = NS + "updateemailaauth"; //이메일 인증 여부 Y로 바꾸기
 	private static final String CHECKEMAILAAUTH  = NS + "checkemailaauth"; //이메일 인증 정보 일치 여부 확인
 	private static final String SELECTEMAILAUTH  = NS + "selectemailauth"; //이메일 인증 정보 Y인지 확인
@@ -93,11 +94,21 @@ public class UserDAOImpl implements UserDAO {
 		
 	}
 
-
+	
+	
+	//회원가입하기 
 	@Override
 	public void actionJoin(UserDTO user) {
 		System.out.println(user);
+		
+		//회원정보 db에 삽입
 		sqlSession.insert(ACTIONJOIN,user);
+		
+		//ProFileImg 객체의 uid에 값 넣기 
+		user.getProfileimg().setUid(user.getUid());
+		
+		//프로필 정보 db에 삽입하기 (uuid,path,filename)
+		sqlSession.insert(INSERTPROFILE,user.getProfileimg());
 		
 	}
 

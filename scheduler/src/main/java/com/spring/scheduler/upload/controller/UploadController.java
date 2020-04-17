@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,11 +43,14 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RequestMapping("upload")
 public class UploadController {
 	//프로필 사진 삽입하기
-	@RequestMapping(value="/insertProfileImg", method=RequestMethod.POST)
+	@RequestMapping(value= {"/insertProfileImg", "/insertthumbnail"}, method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<List<ProfileImgDTO>> insertProfileImg(MultipartFile [] profileImg) {
+	public ResponseEntity<List<ProfileImgDTO>> insertProfileImg(MultipartFile [] profileImg ,HttpServletRequest request) {
+		
+		
 		List<ProfileImgDTO> list = new ArrayList<ProfileImgDTO>();
-		String rootUplaodPath = "C:\\upload";
+		//요청 url에 따라 썸네일인지 프로필로 폴더를 구성하여 저장 할지 정한다. 
+		String rootUplaodPath = request.getRequestURI().contains("/insertProfileImg")? "C:\\upload\\profile" : "C:\\upload\\thumbnail";
 		String uploadPath = getFolder();
 		File realUploadPath  =  new File(rootUplaodPath, uploadPath);
 		
@@ -65,8 +70,8 @@ public class UploadController {
 		File saveFile = new File(realUploadPath, fileName);
 		
 		
-		//업로드된 정보를 다시 fornt에게 알려주기 위하여 담는 작업 수행 
-		dto.setPath(uploadPath.replace(File.separator,"/"));
+		//업로드된 정보를 다시 front에게 알려주기 위하여 담는 작업 수행 
+		dto.setPath(rootUplaodPath.substring(rootUplaodPath.lastIndexOf("\\")+1)+"/"+uploadPath.replace(File.separator,"/"));
 		
 		dto.setUuid(uuid.toString());
 		
@@ -122,8 +127,8 @@ public class UploadController {
 	//
 	@RequestMapping("/display")
 	@ResponseBody
-	public ResponseEntity<byte[]> display(String filename) {
-		System.out.println("display:::::" + filename);
+	public ResponseEntity<byte[]> display(String filename, HttpServletRequest requst) {
+		
 		File profileImg = new File("c:\\upload\\"+filename);
 		System.out.println(profileImg.toPath());
 		HttpHeaders headers = new HttpHeaders();

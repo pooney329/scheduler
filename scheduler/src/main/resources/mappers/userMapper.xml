@@ -59,6 +59,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
     
     
+    <!--프로필 사진 삽입  -->
+    
+    <insert id="insertprofile">
+		insert into PROFILE values(#{uid},#{uuid},#{path},#{filename});      
+    </insert>
+    
+    
     
 </mapper>
 

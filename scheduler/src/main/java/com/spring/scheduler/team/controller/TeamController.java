@@ -64,6 +64,7 @@ public class TeamController {
 	@RequestMapping(value="/teamdetail" , method=RequestMethod.GET)
 	public void teamdetail (@RequestParam int tbno, Model model) {
 		TeamDTO team = teamService.getTeamDetail(tbno);
+		System.out.println(team);
 		model.addAttribute("team", team);
 		
 	}

@@ -76,6 +76,12 @@
 				
 		<!-- validate-form -->
 				<form class="login100-form  form1 " action="${path}/user/joinaction" method="post">
+				
+					<div class="profile_img" style="text-align:center">
+						<img src="${path}/resources/image/default_img.jpg" width="300px"
+							height="300px" style="border-radius:50%;">
+					</div>
+				
 					<span>이름</span>
 					<div class="wrap-input100 validate-input" data-validate = "name is required">
 						<input class="input100" type="text" name="name" placeholder="Name" onkeyup="validate(this)" data-attr="name">
@@ -279,6 +285,9 @@ $(".form1").on("submit", function(){
 	}
 	
 	else{
+		
+		
+		addProfileImg();
 		return true;
 		
 		
@@ -437,7 +446,83 @@ function validate(target){
 
 	
 }
+/* 프로필 사진 등록 */
+ 
+//컨트로럴에 보낼 이미지경로를 hidden으로 form 에 붙여서 컨트롤러에 보내는 작업 수행 
+function addProfileImg(){
+	var path = $(".profile_img img").data("path");
+	var uuid = $(".profile_img img").data("uuid");
+	var filename = $(".profile_img img").data("filename");
+	$("<input type='hidden' name='ProFileImg.path' value='"+path+"'>");
+	$("<input type='hidden' name='ProFileImg.uuid' value='"+uuid+"'>");
+	$("<input type='hidden' name='ProFileImg.filename' value='"+filename+"'>");
 	
+	
+	$("form").append($("<input type='hidden' name='profileimg.path' value='"+path+"'>"));
+	$("form").append($("<input type='hidden' name='profileimg.uuid' value='"+uuid+"'>"));
+	$("form").append($("<input type='hidden' name='profileimg.filename' value='"+filename+"'>"));
+	
+	
+}		
+
+function profileDragover(event){
+	event.preventDefault();
+	event.stopPropagation();
+	console.log("dragover");
+}
+
+function profileDrop(event){
+	event.preventDefault();
+	event.stopPropagation();
+	
+	console.log(event.originalEvent.dataTransfer.files[0])
+	var data = event.originalEvent.dataTransfer.files;
+	var formData = new FormData();
+	console.log(data);
+	formData.append("profileImg",data[0]);
+	$.ajax({
+		url:"${path}/upload/insertProfileImg",
+		processData : false,
+		contentType : false,
+		type:"POST",
+		data:formData,
+		dataType:"json",
+		success:function(result){
+			profileImgDisplay(result);
+		},
+		error:function(result){
+			console.log("실패");
+		}
+		
+	})
+	
+	
+	
+}
+
+$(".profile_img").on("dragover",event,profileDragover).on("drop",event,profileDrop);
+
+
+function profileImgDisplay(result){
+	 var check = RegExp(/\\/g);
+	 
+	 var path= result[0].path+'/s_'+result[0].uuid+'_'+result[0].filename;
+	 console.log(path);
+	 if(check.test(path)){
+	 	path = encodeURIComponent(path.replace(/\\/g,"/"));
+		 
+	 }
+	 console.log(path);
+		 
+	$(".profile_img img").attr("src",'${path}/upload/display?filename='+path);
+	$(".profile_img img").data("path", result[0].path);
+	$(".profile_img img").data("uuid", result[0].uuid);
+	$(".profile_img img").data("filename", result[0].filename);
+	
+	
+	
+}
+
 
 
 	</script>

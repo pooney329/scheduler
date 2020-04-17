@@ -12,6 +12,7 @@ public class UserDTO {
 	String googleid;
 	String naverid;
 	String emailauthentication;
+	ProFileImg profileimg;
 	
 	
 	
@@ -97,6 +98,18 @@ public class UserDTO {
 	public void setNaverid(String naverid) {
 		this.naverid = naverid;
 	}
+
+
+	public ProFileImg getProfileimg() {
+		return profileimg;
+	}
+
+
+	public void setProfileimg(ProFileImg profileimg) {
+		this.profileimg = profileimg;
+	}
+	
+	
 	
 	
 	

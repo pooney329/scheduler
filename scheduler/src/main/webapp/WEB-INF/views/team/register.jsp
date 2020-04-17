@@ -384,7 +384,7 @@ label[for='ex_rd2']{
 			var formData = new FormData();
 			formData.append("profileImg",data[0]);
 			$.ajax({
-				url:"${path}/upload/insertProfileImg",
+				url:"${path}/upload/insertthumbnail",
 				processData : false,
 				contentType : false,
 				type:"POST",

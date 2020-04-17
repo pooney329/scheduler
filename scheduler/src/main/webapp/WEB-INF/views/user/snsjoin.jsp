@@ -161,6 +161,9 @@
 			else {
 				//form태그에 snsemail 추가하기
 				addSnsEmail();
+				addProfileImg();
+				
+				
 				return true;
 
 			}
@@ -185,52 +188,22 @@
 			$form.append(input_email2);
 			$form.append(input_emailauthentication);
 		}
-
-		
-
-		//정규식검사
-		function validate(target) {
-
-			var $target = $(target);
-			var $attr = $target.data("attr");
-			if ($attr == "name") {
-				var userName = RegExp(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/);
-				if (userName.test($target.val())) {
-					$target.val($target.val().replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/, ''));
-					check_name = true;
-
-				} else {
-					$target.val($target.val().replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/, ''));
-				}
-			}else if ($attr == "phone") {
-				var userPhone = RegExp(/^[\d]{4,}$/);
-				if (userPhone.test($target.val())) {
-
-					if ($target.attr("name") == "phone2") {
-						check_phone2 = true;
-
-					}
-					if ($target.attr("name") == "phone3") {
-						check_phone3 = true;
-					}
-
-				} else {
-					$target.val($target.val().replace(/[^\d]/g, ''));
-					if ($target.attr("name") == "phone2") {
-						check_phone2 = false;
-					}
-					if ($target.attr("name") == "phone3") {
-						check_phone3 = false;
-					}
-				}
-			}
+		//컨트로럴에 보낼 이미지경로를 hidden으로 form 에 붙여서 컨트롤러에 보내는 작업 수행 
+		function addProfileImg(){
+			var path = $(".profile_img img").data("path");
+			var uuid = $(".profile_img img").data("uuid");
+			var filename = $(".profile_img img").data("filename");
+			$("<input type='hidden' name='ProFileImg.path' value='"+path+"'>");
+			$("<input type='hidden' name='ProFileImg.uuid' value='"+uuid+"'>");
+			$("<input type='hidden' name='ProFileImg.filename' value='"+filename+"'>");
 			
-
-		}
-		
-		
-		
-		
+			
+			$("form").append($("<input type='hidden' name='ProFileImg.path' value='"+path+"'>"));
+			$("form").append($("<input type='hidden' name='ProFileImg.uuid' value='"+uuid+"'>"));
+			$("form").append($("<input type='hidden' name='ProFileImg.filename' value='"+filename+"'>"));
+			
+			
+		}		
 		
 		function profileDragover(event){
 			event.preventDefault();
@@ -282,8 +255,60 @@
 			 console.log(path);
 				 
 			$(".profile_img img").attr("src",'${path}/upload/display?filename='+path);
+			$(".profile_img img").data("path", result[0].path);
+			$(".profile_img img").data("uuid", result[0].uuid);
+			$(".profile_img img").data("filename", result[0].filename);
+			
+			
 			
 		}
+		
+
+		//정규식검사
+		function validate(target) {
+
+			var $target = $(target);
+			var $attr = $target.data("attr");
+			if ($attr == "name") {
+				var userName = RegExp(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/);
+				if (userName.test($target.val())) {
+					$target.val($target.val().replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/, ''));
+					check_name = true;
+
+				} else {
+					$target.val($target.val().replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/, ''));
+				}
+			}else if ($attr == "phone") {
+				var userPhone = RegExp(/^[\d]{4,}$/);
+				if (userPhone.test($target.val())) {
+
+					if ($target.attr("name") == "phone2") {
+						check_phone2 = true;
+
+					}
+					if ($target.attr("name") == "phone3") {
+						check_phone3 = true;
+					}
+
+				} else {
+					$target.val($target.val().replace(/[^\d]/g, ''));
+					if ($target.attr("name") == "phone2") {
+						check_phone2 = false;
+					}
+					if ($target.attr("name") == "phone3") {
+						check_phone3 = false;
+					}
+				}
+			}
+			
+
+		}
+		
+		
+		
+		
+		
+		
 	</script>
 	<!--===============================================================================================-->
 	<script src="${loginform}/js/main.js"></script>

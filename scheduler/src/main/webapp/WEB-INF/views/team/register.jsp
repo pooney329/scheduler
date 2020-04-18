@@ -38,6 +38,15 @@
 <link rel="stylesheet" type="text/css" href="${loginform}/css/main.css">
 <!--===============================================================================================-->
 
+<!--date picker 사용-->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    
+
+<!--디자인 변화  -->  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
+
+
 <script>
 	
 </script>
@@ -228,6 +237,14 @@ label[for='ex_rd2']{
 							
 						</span>
 					</div>
+					
+					<div class="container">
+						<span>마감시간 </span>
+						<input type="text" id="datePicker" class="form-control" value="종료시간 선택" name="endDay">
+					</div>
+					
+					
+					
 					<div class="container">
 						<span>검색 노출 설정 </span>
 						<div class="checks">
@@ -257,6 +274,15 @@ label[for='ex_rd2']{
 	<script src="${loginform}/vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="${loginform}/vendor/tilt/tilt.jquery.min.js"></script>
+	
+	<!--데이터피커  -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
+	<!--한국어  달력 쓰려면 추가 로드-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
+
 	<script>
 		$('.js-tilt').tilt({
 			scale : 1.1
@@ -508,6 +534,17 @@ label[for='ex_rd2']{
 			}
 
 		}
+		
+		
+	/* 데이터피커 */
+	
+	$('#datePicker').datepicker({
+			format : "yyyy-mm-dd", // 달력에서 클릭시 표시할 값 형식
+            language : "kr" ,
+            startDate : "+1d",  // 시작점을 지정하여 이 기간을 기준으로 날짜 선택을 못하게한다 .
+            todayHighlight: true
+		});
+	
 	</script>
 	<!--===============================================================================================-->
 	<script src="${loginform}/js/main.js"></script>

@@ -65,6 +65,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into PROFILE values(#{uid},#{uuid},#{path},#{filename});      
     </insert>
     
+    <select id="selectprofileimg" resultType="com.spring.scheduler.user.dto.ProFileImg">
+    	SELECT * FROM PROFILE WHERE uid= #{uid}
+    </select>
+    
     
     
 </mapper>

@@ -28,6 +28,7 @@ public class UserDAOImpl implements UserDAO {
 	private static final String SELECTEMAILAUTH  = NS + "selectemailauth"; //이메일 인증 정보 Y인지 확인
 	private static final String EMAILAUTHDUPLICATE  = NS + "emailauthduplicate"; //이메일 인증 의 이메일 중복확인
 	private static final String EMAILAUTHIDUPDATE  = NS + "emailauthidupdate"; //이메일 인증 아이디 변경
+	public static final String SELECTPROFILEIMG  = NS + "selectprofileimg"; //프로필 사진 조회
 	
 	
 	

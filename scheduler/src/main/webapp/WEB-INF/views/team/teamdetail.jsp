@@ -43,7 +43,22 @@
 		text-align:center;
 		font-size:1.7em;
 	}
-
+	.master{
+		text-align:center;
+	}
+	.master img{
+		border-radius:50%;
+		width:10%;
+		height:10%;
+	}
+	.master span{
+		margin-left:5%;
+		font-size: 2em;
+			
+	}
+	.master div{
+		margin-top:30px;
+	}
 </style>
 
 
@@ -79,7 +94,10 @@
 		</div>
 		
 		<div class="master">
-			${team.master}		
+			<div>
+				 <img src="${path}/upload/display?filename=${team.proFileImg.path}/s_${team.proFileImg.uuid}_${team.proFileImg.filename}"/> 
+				 <span>${team.masterName}</span>
+			 </div>		
 		</div>
 						
 

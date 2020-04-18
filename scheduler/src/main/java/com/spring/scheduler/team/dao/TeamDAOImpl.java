@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.scheduler.team.dto.TeamDTO;
 import com.spring.scheduler.team.dto.ThumbnailDTO;
+import com.spring.scheduler.user.dao.UserDAOImpl;
+import com.spring.scheduler.user.dto.ProFileImg;
 
 
 @Repository
@@ -21,7 +23,8 @@ public class TeamDAOImpl implements TeamDAO {
 	private static final String INSERTTHUMBNAIL = NS+ "insertthumbnail"; //팀 썸네일 등록
 	private static final String TEAMLIST = NS+"teamlist"; //팀리스트 가져오기
 	private static final String SELECTTHUMBNAIL = NS+"selectthumbnail"; //팀썸네일 가져오기
-	private static final String SELECTTEAMDETAIL = NS+"selectteamdetail"; //팀상세정보 가져오기 
+	private static final String SELECTTEAMDETAIL = NS+"selectteamdetail"; //팀상세정보 가져오기
+	
 	
 	
 	@Inject
@@ -114,15 +117,15 @@ public class TeamDAOImpl implements TeamDAO {
 		
 		//팀 썸네일 가져오기 
 		List<ThumbnailDTO> thumbnailList = sqlSession.selectList(SELECTTHUMBNAIL , tbno);
-		
-		
-		//썸네엘이 존재 한다면 TeamDTO객체에 썸네일리스트 추가하기 
+		//썸네일이 존재 한다면 TeamDTO객체에 썸네일리스트 추가하기 
 		if(!thumbnailList.isEmpty()) {
 			team.setThumbnailList(thumbnailList);
 			
 		}
 		
-		
+		//방장의 프로필 사진 가져오기
+		ProFileImg profileimg = sqlSession.selectOne(UserDAOImpl.SELECTPROFILEIMG, team.getTeamMaster());
+		team.setProFileImg(profileimg);
 		
 		
 		

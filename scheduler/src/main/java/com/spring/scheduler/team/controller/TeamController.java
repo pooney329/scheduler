@@ -1,9 +1,11 @@
 package com.spring.scheduler.team.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.scheduler.team.dto.TeamDTO;
 import com.spring.scheduler.team.service.TeamService;
@@ -62,10 +65,28 @@ public class TeamController {
 
 	//팀 상세 정보 보기 
 	@RequestMapping(value="/teamdetail" , method=RequestMethod.GET)
-	public void teamdetail (@RequestParam int tbno, Model model) {
+	public void teamdetail (@RequestParam int tbno, Model model ,HttpSession session) {
+		UserDTO user = (UserDTO)session.getAttribute(SessionAttr.LOGINUSER);
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("캐캐캐캐캐캐");
+		//초대 신청을 한번이라도 했던가 아니면 이미 팀에 등록된 회원인지 확인하여 teamdetail의 버튼을 disabled 한다 . 
+		if(user != null) {
+			String uid = user.getUid();
+			
+			map.put("tbno", tbno);
+			map.put("uid", uid);
+			
+			String msg = teamService.getCheckApply(map);
+			
+			if(msg != null) {
+				model.addAttribute("msg", msg);
+				System.out.println(msg);
+			}
+			
+		}
 		TeamDTO team = teamService.getTeamDetail(tbno);
-		System.out.println(team);
 		model.addAttribute("team", team);
+		model.addAttribute("tbno", tbno);
 		
 	}
 	
@@ -80,5 +101,19 @@ public class TeamController {
 		
 		
 	}
+	
+	@RequestMapping(value="/teamapplication" , method = RequestMethod.GET)
+	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re) {
+		
+		
+		re.addAttribute("meg", "신청이 완료 되었습니다");
+		
+		return "redirect:team/teamdetail?tbno"+tbno;
+		
+		
+	}
+	
+	
 
 }
+

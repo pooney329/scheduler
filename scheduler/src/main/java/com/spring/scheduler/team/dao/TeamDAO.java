@@ -17,5 +17,8 @@ public interface TeamDAO {
 	public List<ThumbnailDTO> getThumnail(int tbno);
 	// 팀 상세정보 가져오기 
 	public TeamDTO getTeamDetail(int tbno);
-
+	//초대 신청을 이미 한 회원인지확인
+	public boolean getCheckEXISTING_Apply(Map<String, Object> map);
+	//이미 팀에 등록된 회원인지 확인 
+	public boolean getCheckEXISTING_MEMBER(Map<String, Object> map);
 }

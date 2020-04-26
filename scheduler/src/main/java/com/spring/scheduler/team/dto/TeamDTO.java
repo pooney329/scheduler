@@ -1,6 +1,9 @@
 package com.spring.scheduler.team.dto;
 
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.spring.scheduler.user.dto.ProFileImg;
 
@@ -19,9 +22,12 @@ public class TeamDTO {
 	private String teamHashTag; //팀 해쉬태그
 	private String participants; //참여인원 수 
 	private String allowSearch;  // 검색 노출 허용 여부
-	private String thumbnailExistence;  //썸네일 존재 여부 
-	private String startDay; //개설시간;
-	private String endDay; //마감시간;
+	private String thumbnailExistence;  //썸네일 존재 여부
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDay; //개설시간;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDay; //마감시간;
 	private List<ThumbnailDTO> thumbnailList =null ; //대표썸네일 , 백그라운드 썸네일
 	
 	private int tbno; //게시물 번호

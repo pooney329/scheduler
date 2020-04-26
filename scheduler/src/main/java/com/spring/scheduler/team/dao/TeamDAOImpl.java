@@ -24,6 +24,13 @@ public class TeamDAOImpl implements TeamDAO {
 	private static final String TEAMLIST = NS+"teamlist"; //팀리스트 가져오기
 	private static final String SELECTTHUMBNAIL = NS+"selectthumbnail"; //팀썸네일 가져오기
 	private static final String SELECTTEAMDETAIL = NS+"selectteamdetail"; //팀상세정보 가져오기
+	private static final String SELECTEXISTINGAPPLY = NS+"selectexistingapply"; //기존에 팀에 참여 신청을 했는지 확인
+	private static final String SELECTEXISTINGMEMBER = NS+"selectexistingmember"; //팀에 이미 등록된 회원인지 확인
+	
+	
+	
+	
+	
 	
 	
 	
@@ -132,6 +139,17 @@ public class TeamDAOImpl implements TeamDAO {
 		return team;
 				
 	}
+	@Override
+	public boolean getCheckEXISTING_Apply(Map<String, Object> map) {
+		boolean check = sqlSession.selectOne(SELECTEXISTINGAPPLY, map) == null ? false :true;
+		return check;
+	}
+	@Override
+	public boolean getCheckEXISTING_MEMBER(Map<String, Object> map) {
+		boolean check = sqlSession.selectOne(SELECTEXISTINGMEMBER, map) == null ? false :true;
+		return check;
+	}
+	
 	
 
 }

@@ -34,6 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</insert>
 	
+	
+	
 	<!--팀등록 -->
 	
 	<insert id ="insertmember">
@@ -54,10 +56,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				t.teamHashTag,
 				t.participants,
 				membercount.num 
-		FROM (SELECT * , Row_Number() OVER (order by tbno desc ) AS rownum FROM team ORDER BY team.teamdate DESC , team.tbno DESC  ) t , 
+		FROM (SELECT * , Row_Number() OVER (order by tbno desc ) AS rownum FROM team ORDER BY team.startday DESC , team.tbno DESC  ) t , 
 			 (SELECT tbno ,COUNT(*) AS num FROM team_member GROUP BY tbno) membercount
 		
-		WHERE t.tbno = membercount.tbno AND rownum BETWEEN #{start} AND #{end} ORDER BY t.teamdate desc
+		WHERE t.tbno = membercount.tbno AND rownum BETWEEN #{start} AND #{end} ORDER BY t.startday desc
 	    	
     
     </select>
@@ -71,10 +73,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	<!-- SELECT *, (SELECT name from user WHERE  uid IN (SELECT uid FROM team_member WHERE tbno=#{tbno} and authority ='master') ) as master 
     	from team where tbno = #{tbno} -->
     	
-    	SELECT team.* , (SELECT NAME from user WHERE  uid IN (SELECT uid FROM team_member WHERE tbno=#{tbno} and authority ='master')) as masterName 
+    	SELECT team.* , (SELECT COUNT(*) AS num FROM team_member where tbno=#{tbno} GROUP BY tbno) AS num , (SELECT NAME from user WHERE  uid IN (SELECT uid FROM team_member WHERE tbno=#{tbno} and authority ='master')) as masterName 
     	from team where tbno = #{tbno} 
     </select>
     
+     
+     
+     
+     <select id="selectexistingmember" resultType="String">
+     	SELECT uid FROM team_member WHERE tbno = #{tbno} AND uid = #{uid}
+     </select>
+     
+     <select id="selectexistingapply" resultType="String">
+     	SELECT uid FROM team_apply WHERE tbno = #{tbno} AND uid = #{uid}
+     </select>
+     
      
     
     

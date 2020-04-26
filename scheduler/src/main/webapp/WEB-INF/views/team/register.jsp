@@ -167,7 +167,7 @@ label[for='ex_rd2']{
 
 			<div class="wrap-login100" style="padding-top: 100px;">
 				<div class="container">
-					<h2 style="text-align: center; padding-bottom: 50px;">일반회원 가입</h2>
+					<h2 style="text-align: center; padding-bottom: 50px;">팀 등록</h2>
 				</div>
 
 

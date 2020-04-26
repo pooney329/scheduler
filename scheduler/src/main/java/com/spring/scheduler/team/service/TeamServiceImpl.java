@@ -54,4 +54,35 @@ public class TeamServiceImpl implements TeamService {
 				
 	}
 
+	@Override
+	public String getCheckApply(Map<String, Object> map) {
+		
+		//기존 팀의 회원인지 확인
+		boolean member_existence=  teamDao.getCheckEXISTING_MEMBER(map);
+		
+		//기존 팀의 회원인경우 
+		if(member_existence) {
+			return "member";
+			
+		}else {
+			
+			//기존이 팀에 탐여신청을 했는지 확인 
+			boolean apply_existence = teamDao.getCheckEXISTING_Apply(map);
+			
+			//기존에 팀에 참여신청을 한경우 
+			if(apply_existence) {
+				return "apply";
+			}
+			else{
+				return null;
+	
+			}
+			
+		}
+		
+		
+	}
+
+	
+
 }

@@ -19,5 +19,9 @@ public interface TeamService {
 	
 	// 팀 상세정보 가져오기 
 	public TeamDTO getTeamDetail(int tbno);
+	
+	
+	//초대 신청을 이미 한 회원인지  아니면 이미 팀에 등록된 회원인지 확인 
+	public String getCheckApply(Map<String, Object> map);
 
 }

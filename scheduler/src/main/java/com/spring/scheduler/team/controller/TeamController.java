@@ -68,7 +68,7 @@ public class TeamController {
 	public void teamdetail (@RequestParam int tbno, Model model ,HttpSession session) {
 		UserDTO user = (UserDTO)session.getAttribute(SessionAttr.LOGINUSER);
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("캐캐캐캐캐캐");
+		
 		//초대 신청을 한번이라도 했던가 아니면 이미 팀에 등록된 회원인지 확인하여 teamdetail의 버튼을 disabled 한다 . 
 		if(user != null) {
 			String uid = user.getUid();
@@ -103,12 +103,13 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value="/teamapplication" , method = RequestMethod.GET)
-	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re) {
+	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re ) {
+		
+		re.addAttribute("tbno", tbno);
+		re.addFlashAttribute("msg","신청이 완료되었습니다");
 		
 		
-		re.addAttribute("meg", "신청이 완료 되었습니다");
-		
-		return "redirect:team/teamdetail?tbno"+tbno;
+		return "redirect:/team/teamdetail";
 		
 		
 	}

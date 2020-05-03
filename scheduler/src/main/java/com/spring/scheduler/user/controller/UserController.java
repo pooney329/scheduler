@@ -114,13 +114,13 @@ public class UserController {
 			else {
 				
 				session.setAttribute(SessionAttr.LOGINUSER, snsuser);
-				return "redirect:/";
+				return "index";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/"; 
+		return "index"; 
 		
 		
 		
@@ -159,13 +159,13 @@ public class UserController {
 		if(!loginuser.getEmailauthentication().equals("Y")) {
 			re.addFlashAttribute(SessionAttr.TEMPORARYUSER, loginuser);
 			
-			return "redirect:emailReAuthentication";
+			return "emailReAuthentication";
 		}
 		else {
 			
 			session.setAttribute(SessionAttr.LOGINUSER, loginuser);
 			System.out.println(user);
-			return "redirect:/";
+			return "index";
 		}
 		
 		

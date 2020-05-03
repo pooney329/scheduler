@@ -14,6 +14,15 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
+	
+	
+	<!-- Stringutils -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+	
 	<!--이메일인증  -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -26,7 +35,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
 			</dependency>
-	<!--Lomboc -->
+	<!--Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

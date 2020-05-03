@@ -33,6 +33,19 @@
 	<annotation-driven></annotation-driven>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 네이버 oauth -->
 	<beans:bean id="naverClientID" class="java.lang.String">
 		<beans:constructor-arg
@@ -72,15 +85,32 @@
 		<beans:constructor-arg ref="googleRedirectUrl" />
 	</beans:bean>
 	
-	<!-- <beans:bean id="loginInterceptor" class="com.spring.scheduler.user.interceptor.LoginInterceptor"/>
+	
+	
+	
+	<!--로그인 인터셉터  -->
+	<beans:bean id="authInterceptor" class="com.spring.scheduler.user.interceptor.AuthInterceptor"/>
+	<beans:bean id="loginInterceptor" class="com.spring.scheduler.user.interceptor.LoginInterceptor"/>
+
 	<interceptors>
 		<interceptor>
-			<mapping path="/user/actionLogin"/>
-			<mapping path="/user/auth/google/callback"/>
+			<mapping path="/team/teamapplication"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			
 			<mapping path="/user/auth/naver/callback"/>
+			<mapping path="/user/auth/google/callback"/>
+			<mapping path="/user/actionLogin"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
-	</interceptors> -->
+	</interceptors>
+	
+	
+	
 	<!--메일보내기  -->
 	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com" />

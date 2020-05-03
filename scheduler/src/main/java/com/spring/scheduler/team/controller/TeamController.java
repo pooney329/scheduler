@@ -103,8 +103,10 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value="/teamapplication" , method = RequestMethod.GET)
-	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re ) {
+	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re  ,HttpSession session) {
 		
+		
+		/* teamService.insertTeamApply(); */
 		re.addAttribute("tbno", tbno);
 		re.addFlashAttribute("msg","신청이 완료되었습니다");
 		

@@ -23,5 +23,7 @@ public interface TeamService {
 	
 	//초대 신청을 이미 한 회원인지  아니면 이미 팀에 등록된 회원인지 확인 
 	public String getCheckApply(Map<String, Object> map);
+	//팀참여 신청하기 
+	public boolean insertTeamApply(int tbno, String uid);
 
 }

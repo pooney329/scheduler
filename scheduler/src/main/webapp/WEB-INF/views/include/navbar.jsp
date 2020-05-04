@@ -12,8 +12,34 @@
 			<div class="container-fluid">
 				<ul class="nav justify-content-end">
 					<c:if test="${sessionScope.loginuser != null}">
-						<li class="nav-item"><a class="nav-link active" href="#">${sessionScope.loginuser.name}</a></li>
-						<li class="nav-item"><a class="nav-link active" href="${path}/user/logout">logout</a></li>
+
+
+
+
+
+					<div class="dropdown">
+						<button type="button" class="btn btn-link"
+							data-toggle="dropdown">${sessionScope.loginuser.name}</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="${path}/user/mypage">mypage</a> 
+							
+							<a class="dropdown-item" href="#">스케줄 보관함</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="${path}/user/logout">logout</a>
+						</div>
+					</div>
+
+
+
+
+
+					<%-- <li class="nav-item"><a class="nav-link active" href="${path}/user/mypage">${sessionScope.loginuser.name}</a></li>
+						<li class="nav-item"><a class="nav-link active" href="${path}/user/logout">logout</a></li> --%>
+						
+						
+						
+						
+						
 						
 					</c:if>
 					<c:if test="${sessionScope.loginuser == null}">

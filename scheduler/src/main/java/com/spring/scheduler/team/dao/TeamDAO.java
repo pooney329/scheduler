@@ -21,4 +21,6 @@ public interface TeamDAO {
 	public boolean getCheckEXISTING_Apply(Map<String, Object> map);
 	//이미 팀에 등록된 회원인지 확인 
 	public boolean getCheckEXISTING_MEMBER(Map<String, Object> map);
+	//팀참여 신청하기 
+	public boolean insertTeamApply(int tbno, String uid);
 }

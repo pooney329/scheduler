@@ -101,14 +101,16 @@ public class TeamController {
 		
 		
 	}
-	
+	//팀참여 신청 하기 (로그인 하지않은 경우 AuthInterceptor에 의해 걸러짐)
 	@RequestMapping(value="/teamapplication" , method = RequestMethod.GET)
 	public String teamapplication(@RequestParam("tbno") int tbno , RedirectAttributes re  ,HttpSession session) {
 		
-		
-		/* teamService.insertTeamApply(); */
+		UserDTO user = (UserDTO) session.getAttribute(SessionAttr.LOGINUSER);	
+		String uid = user.getUid();
+	
+		teamService.insertTeamApply(tbno,uid); 
 		re.addAttribute("tbno", tbno);
-		re.addFlashAttribute("msg","신청이 완료되었습니다");
+		re.addFlashAttribute("apply_result","신청이 완료되었습니다");
 		
 		
 		return "redirect:/team/teamdetail";

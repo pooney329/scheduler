@@ -66,7 +66,7 @@ public class TeamServiceImpl implements TeamService {
 			
 		}else {
 			
-			//기존이 팀에 탐여신청을 했는지 확인 
+			//기존이 팀에 참여신청을 했는지 확인 
 			boolean apply_existence = teamDao.getCheckEXISTING_Apply(map);
 			
 			//기존에 팀에 참여신청을 한경우 
@@ -81,6 +81,12 @@ public class TeamServiceImpl implements TeamService {
 		}
 		
 		
+	}
+
+	@Override
+	public boolean insertTeamApply(int tbno, String uid) {
+		
+		return teamDao.insertTeamApply(tbno, uid);
 	}
 
 	

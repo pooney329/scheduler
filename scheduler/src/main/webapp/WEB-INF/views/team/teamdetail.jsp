@@ -286,8 +286,8 @@
 <script>
 
 	//참가하기 버튼을 눌른 다음 msg 값을 넘겨 받 게된다. 이떄 참가 신청완료라는 alert 창을 뛰우게되고  teamlist에서 teamdetail로 넘어온경우 msg값이 null 이기 때문에 아무런 alert창이 나오지 않는다. 
-	<c:if  test="${msg != null && msg !='' }">
-		alert("${msg}");
+	<c:if  test="${apply_result != null && apply_result !='' }">
+		alert("${apply_result}");
 	</c:if>
 	
 	

@@ -89,7 +89,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      </select>
      
      
-    
+    <insert id="insertteamapply">
+    	INSERT INTO team_apply(tbno, uid) VALUE(#{tbno} , #{uid})
+    </insert>
     
 </mapper>
 

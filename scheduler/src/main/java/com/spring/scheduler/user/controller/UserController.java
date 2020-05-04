@@ -305,6 +305,16 @@ public class UserController {
 	public void snsjoin() {
 		
 	}
+	
+	//마이페이지 
+	@RequestMapping("/mypage")
+	public void mypage() {
+		
+		
+		
+		
+	}
+	
 
 }
 

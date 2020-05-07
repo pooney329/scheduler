@@ -23,7 +23,7 @@
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="${path}/user/mypage">mypage</a> 
 							
-							<a class="dropdown-item" href="#">스케줄 보관함</a>
+							<a class="dropdown-item" href="${path}/team/myteam">스케줄 보관함</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="${path}/user/logout">logout</a>
 						</div>

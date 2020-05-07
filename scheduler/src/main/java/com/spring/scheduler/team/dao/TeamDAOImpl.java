@@ -159,6 +159,12 @@ public class TeamDAOImpl implements TeamDAO {
 		boolean teamApplyCheck = sqlSession.insert(INSERTTEAMAPPLY,map)==1 ? true:false; 
 		return teamApplyCheck;
 	}
+	@Override
+	public List<TeamDTO> getWaitingTeamList(String uid) {
+		List<TeamDTO> list = sqlSession.selectList("team.selectwaitingteamlist" , uid);
+		
+		return list;
+	}
 	
 	
 

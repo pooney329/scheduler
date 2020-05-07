@@ -89,6 +89,12 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.insertTeamApply(tbno, uid);
 	}
 
+	@Override
+	public List<TeamDTO> getWaitingTeamList(String uid) {
+		
+		return teamDao.getWaitingTeamList(uid);
+	}
+
 	
 
 }

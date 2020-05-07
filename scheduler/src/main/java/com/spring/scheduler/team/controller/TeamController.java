@@ -117,6 +117,18 @@ public class TeamController {
 		
 		
 	}
+	//myteam 페이지 이동 
+	@RequestMapping(value="myteam" , method=RequestMethod.GET)
+	public void myteam(HttpSession session ,Model model) {
+		UserDTO user =(UserDTO)session.getAttribute(SessionAttr.LOGINUSER);
+		
+		//참여대기중인 팀 리스트 보여주기 
+		List<TeamDTO> list = teamService.getWaitingTeamList(user.getUid());
+		model.addAttribute("list",list); 
+
+		
+		
+	}
 	
 	
 

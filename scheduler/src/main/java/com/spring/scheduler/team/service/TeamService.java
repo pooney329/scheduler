@@ -25,5 +25,7 @@ public interface TeamService {
 	public String getCheckApply(Map<String, Object> map);
 	//팀참여 신청하기 
 	public boolean insertTeamApply(int tbno, String uid);
+	//팀 참여 대기중인 팀리스트 가져오기 
+	public List<TeamDTO> getWaitingTeamList(String uid);
 
 }

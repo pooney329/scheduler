@@ -92,7 +92,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertteamapply">
     	INSERT INTO team_apply(tbno, uid) VALUE(#{tbno} , #{uid})
     </insert>
+
+
+	<resultMap id="postReply"
+		type="com.spring.scheduler.team.dto.TeamDTO">
+		<id property="teamName" column="teamName" />
+		<id property="teamIntroduce" column="teamIntroduce" />
+		<id property="tbno" column="tbno" />
+		<collection property="thumbnailList" ofType="com.spring.scheduler.team.dto.ThumbnailDTO">
+			<result property="uuid" column="uuid" />
+			<result property="filename" column="fileName" />
+			<result property="path" column="path" />
+
+		</collection>
+	</resultMap>
     
+    
+    
+    <select id="selectwaitingteamlist" resultMap="postReply" >
+    	SELECT team.teamName , team.teamIntroduce ,  thumbnail.*  from team_apply inner join team ON team.tbno = team_apply.tbno  INNER JOIN thumbnail ON team.tbno = thumbnail.tbno WHERE thumbnail.mainThumbnail = 'Y'
+    </select>
 </mapper>
 
 

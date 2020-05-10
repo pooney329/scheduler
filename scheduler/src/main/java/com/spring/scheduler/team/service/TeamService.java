@@ -27,5 +27,7 @@ public interface TeamService {
 	public boolean insertTeamApply(int tbno, String uid);
 	//팀 참여 대기중인 팀리스트 가져오기 
 	public List<TeamDTO> getWaitingTeamList(String uid);
+	//myteam의 tab에 해당하는 팀 리스트 가져오기 ex)참여 대기중 , 개설한 팀 , 찜한 팀 ,참여중인팀 ..
+	public List<TeamDTO> getTeamListGroup(Map<String , String> map);
 
 }

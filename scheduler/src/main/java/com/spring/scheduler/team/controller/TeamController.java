@@ -1,5 +1,6 @@
 package com.spring.scheduler.team.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -130,6 +132,19 @@ public class TeamController {
 		
 	}
 	
+	//myteam에서 tab에 해당하는 teamlist 가져오기 ex)참여중인 팀, 개설한 팀 , 찜한팀 
+	@ResponseBody
+	@RequestMapping("myteam/{teamlistgroup}")
+	public List<TeamDTO> myteamlist(@PathVariable String teamlistgroup, HttpSession session){
+		UserDTO user = (UserDTO)session.getAttribute(SessionAttr.LOGINUSER);
+		String uid = user.getUid();
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("uid" , uid) ;
+		map.put("teamlistgroup" , teamlistgroup) ;
+		List<TeamDTO> list = teamService.getTeamListGroup(map);
+		
+		return list;
+	}
 	
 
 }

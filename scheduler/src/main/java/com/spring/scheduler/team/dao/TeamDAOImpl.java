@@ -165,6 +165,13 @@ public class TeamDAOImpl implements TeamDAO {
 		
 		return list;
 	}
+	@Override
+	public List<TeamDTO> getTeamListGroup(Map<String , String> map) {
+		List<TeamDTO> teamlistgroup =  sqlSession.selectList("team.selectteamlistgroup", map);
+		
+		
+		return teamlistgroup;
+	}
 	
 	
 

@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
 
-	<resultMap id="postReply"
+	<resultMap id="waitingTeams"
 		type="com.spring.scheduler.team.dto.TeamDTO">
 		<id property="teamName" column="teamName" />
 		<id property="teamIntroduce" column="teamIntroduce" />
@@ -109,9 +109,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     
     
-    <select id="selectwaitingteamlist" resultMap="postReply" >
-    	SELECT team.teamName , team.teamIntroduce ,  thumbnail.*  from team_apply inner join team ON team.tbno = team_apply.tbno  INNER JOIN thumbnail ON team.tbno = thumbnail.tbno WHERE thumbnail.mainThumbnail = 'Y'
+    <select id="selectwaitingteamlist" resultMap="waitingTeams" >
+    	SELECT team.teamName , team.teamIntroduce ,  thumbnail.*  
+    	from team_apply inner join team ON team.tbno = team_apply.tbno  INNER JOIN thumbnail ON team.tbno = thumbnail.tbno 
+    	WHERE thumbnail.mainThumbnail = 'Y' AND uid = #{uid} 
     </select>
+    
+    <select id="selectteamlistgroup" resultMap="waitingTeams">
+    	<choose>
+			<when test='teamlistgroup == "participatingteam" or teamlistgroup =="establishedteam"'>
+				SELECT team.teamName , team.teamIntroduce ,  thumbnail.*   FROM team ,thumbnail WHERE  team.tbno IN (SELECT tbno from team_member where uid=#{uid}  AND authority 
+				<if test="teamlistgroup == 'participatingteam' ">
+					!= "master" ) 
+				</if>
+				
+				<if test="teamlistgroup == 'establishedteam' ">
+					= "master" ) 
+				</if>
+				
+				and team.tbno = thumbnail.tbno And thumbnail.mainThumbnail = 'Y' 
+				
+			</when>
+			<when test='teamlistgroup == "waitingteam"'>
+				SELECT team.teamName , team.teamIntroduce ,  thumbnail.*  
+    			from team_apply inner join team ON team.tbno = team_apply.tbno  INNER JOIN thumbnail ON team.tbno = thumbnail.tbno 
+    			WHERE thumbnail.mainThumbnail = 'Y' AND uid = #{uid}
+			</when>
+			
+		</choose>
+	</select>
+   
 </mapper>
 
 

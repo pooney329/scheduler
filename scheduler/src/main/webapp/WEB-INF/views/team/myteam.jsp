@@ -122,26 +122,83 @@ $(".list-group a").on("click", function(e){
 });
 
 function showlist(list){
-	
+	$(".team-item").html("");
 	list.forEach(function(e,i){
+		
 		var cd_div = $("<div>"); 
 		cd_div.addClass("row");
 		cd_div.addClass("cd");
 		cd_div.data("tbno" , e.tbno);
 		
+		
+		
 		var thumbnail_div = $("<div>");
 		thumbnail_div.addClass("col-md-3");
+		thumbnail_div.addClass("team-thumbnail");
+		
 		
 		
 		var thumb_img = $("<img>")
+		
 		thumb_img.attr("src", "${path}/upload/display?filename="+e.thumbnailList[0].path+"/s_"+e.thumbnailList[0].uuid+"_"+e.thumbnailList[0].filename);
 		
 		
-	
+		
+		var content_div = $("<div>");
+		content_div.addClass("team-content");
+		content_div.addClass("col-md-9");
+		
+		var row_div = $("<div>");
+		
+		
+		
+		var name_div = $("<div>");
+		name_div.addClass("team-name");
+		name_div.addClass("col-md-12");
+		name_div.text(e.teamName)
+		
+		var intro_div = $("<div>");
+		intro_div.addClass("team-intro");
+		intro_div.addClass("col-md-12");
+		intro_div.text(e.teamIntroduce);
+		
+		
+		thumbnail_div.append(thumb_img);
+		
+		cd_div.append(thumbnail_div);
+		
+		content_div.append(row_div);
+		
+		row_div.append(name_div);
+		row_div.append(intro_div);
+		
+		
+		cd_div.append(content_div);
+		
+		
+		$(".team-item").append(cd_div);
+		
 		
 		
 		
 	})
+	
+	//어떤 tab list를  선택했는지 값을 불러와서 참여대기중인 팀인경우는 클릭 시 상세정보 페이지로 이동 나머지는 스케즐을 조정할 수 있는 페이지로 이동 
+	var tablist = $("#myList .active").attr("id");
+	console.log(tablist);
+	if(tablist == "waitingteam"){
+		$(".cd").click(function(){
+			var tbno = $(this).data("tbno");
+			location.href="${path}/team/teamdetail?tbno="+tbno;
+		});	
+	}
+	
+	else if(tablist == "establishedteam" || tablist == "participatingteam"){
+		console.log("aaa");
+		
+		
+	}
+	
 	
 	
 	

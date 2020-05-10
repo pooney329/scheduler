@@ -146,6 +146,13 @@ public class TeamController {
 		return list;
 	}
 	
+	@RequestMapping(value="teamcalendar/{tbno}" , method=RequestMethod.GET)
+	public void teamcalendar(@PathVariable String tbno , HttpSession session) {
+		
+		
+	}
+	
+	 
 
 }
 

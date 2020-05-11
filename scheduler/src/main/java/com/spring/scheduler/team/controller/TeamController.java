@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.scheduler.team.dto.CalendarDTO;
 import com.spring.scheduler.team.dto.TeamDTO;
 import com.spring.scheduler.team.service.TeamService;
 import com.spring.scheduler.user.dto.UserDTO;
@@ -146,13 +149,77 @@ public class TeamController {
 		return list;
 	}
 	
-	@RequestMapping(value="teamcalendar/{tbno}" , method=RequestMethod.GET)
-	public void teamcalendar(@PathVariable String tbno , HttpSession session) {
+	@RequestMapping(value="myteam/teamcalendar/{tbno}" , method=RequestMethod.GET)
+	public String teamcalendar(@PathVariable String tbno , HttpSession session) {
+		
+		return "team/teamcalendar";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="calendar/{tbno}" , method=RequestMethod.GET)
+public JSONArray getCalendar(@PathVariable String tbno) {
 		
 		
+	
+		
+		JSONObject ob = new JSONObject();
+		ob.put("id", 1);
+		ob.put("title", "거래처 미팅");
+		ob.put("description","Lorem ipsum dolor sit incid idunt ut Lorem ipsum sit.");
+		ob.put("start", "2019-05-07T09:30");
+		ob.put("end", "2019-05-07T15:00");
+		ob.put("type", "카테고리1");
+		ob.put("username", "다현");
+		ob.put("backgroundColor", "#D25565");
+		ob.put("textColor", "#ffffff");
+		ob.put("allDay", false);
+		
+		
+		JSONObject ob2 = new JSONObject();
+		ob2.put("id", 2);
+		ob2.put("title", "거래처 미팅");
+		ob2.put("description","Lorem ipsum dolor sit incid idunt ut Lorem ipsum sit.");
+		ob2.put("start", "2019-05-14T09:30");
+		ob2.put("end", "2019-05-16T15:00");
+		ob2.put("type", "카테고리1");
+		ob2.put("username", "다현");
+		ob2.put("backgroundColor", "#D25565");
+		ob2.put("textColor", "#ffffff");
+		ob2.put("allDay", false);
+		
+		JSONArray array = new JSONArray();
+		array.add(ob);
+		array.add(ob2);
+		
+		
+		
+		
+		return array;
 	}
 	
 	 
+	
+	@ResponseBody
+	@RequestMapping(value = "calendar/{tbno}", method = RequestMethod.POST)
+	public String setCalendar(@PathVariable String tbno,  @RequestBody CalendarDTO dto) {
+		System.out.println(dto);
+		return "완료"; 
 
+	}	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

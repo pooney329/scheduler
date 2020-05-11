@@ -166,13 +166,13 @@ var calendar = $('#calendar').fullCalendar({
 	  console.log(callback);
     $.ajax({
       type: "get",
-      url: "getdate",
+      url: "/scheduler/team/calendar/1",
       dataType :"json",
       data: {
         // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
       success: function (response) {
-    	  
+    	  console.log("a kaiaiajks");	
     	  
         var fixedDate = response.map(function (array) {
           if (array.allDay && array.start !== array.end) {	
@@ -216,7 +216,7 @@ var calendar = $('#calendar').fullCalendar({
     //리사이즈한 일정 업데이트
     $.ajax({
       type: "get",
-      url: "",
+      url: "${path}/team/calendar/1",
       data: {
         //id: event._id,
         //....

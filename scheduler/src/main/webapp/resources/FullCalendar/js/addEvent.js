@@ -77,15 +77,19 @@ var newEvent = function (start, end, eventType) {
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
-
+        
+        
+        
+        
         //새로운 일정 저장
         $.ajax({
-            type: "get",
-            url: "",
-            data: {
-                //.....
-            },
+            type: "post",
+            url: "/scheduler/team/calendar/1",
+            data: JSON.stringify(eventData),
+            contentType: "application/json",
             success: function (response) {
+            	
+            	console.log("성공적인 저장")
                 //DB연동시 중복이벤트 방지를 위한
                 //$('#calendar').fullCalendar('removeEvents');
                 //$('#calendar').fullCalendar('refetchEvents');
